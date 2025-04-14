@@ -38,7 +38,7 @@ public class Calculadora extends JFrame {
 	 */
 	public Calculadora() {
 		operacion = new Polinomio("");
-
+		
 		setResizable(false);
 		setTitle("Calculadora");
 		setFont(new Font("Arial Black", Font.PLAIN, 12));
@@ -57,7 +57,7 @@ public class Calculadora extends JFrame {
 		textField.setForeground(Color.WHITE);
 		contentPane.add(textField, "cell 0 0 4 1,grow");
 		textField.setColumns(10);
-
+		textField.setEditable(false);
 		JButton button = new JButton("%");
 		button.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		button.setForeground(Color.WHITE);

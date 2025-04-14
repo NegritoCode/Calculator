@@ -1,11 +1,12 @@
 package gui;
 
-import logica.Operacion;
+import logica.Polinomio;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.server.Operation;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,17 +24,20 @@ public class Calculadora extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
-	private Operacion operacion;
-
+	private Polinomio operacion;
+    
     public void render() {
-    	textField.setText(operacion.getExpresion());
+		String expresion = operacion.getExpresion();
+		System.out.println("");
+		operacion.printSelf("");
+    	textField.setText(expresion.length() == 0 ? "0" : expresion);
     }
 
 	/**
 	 * Create the frame.
 	 */
 	public Calculadora() {
-		operacion = new Operacion();
+		operacion = new Polinomio("");
 
 		setResizable(false);
 		setTitle("Calculadora");

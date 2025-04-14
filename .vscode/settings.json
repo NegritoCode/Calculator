@@ -1,0 +1,22 @@
+{
+    "java.project.referencedLibraries": [
+        {
+            "path": "/home/rodnye/code/@others/Calculator/miglayout15-swing.jar",
+            "source": {
+                "path": "/home/rodnye/code/@others/Calculator/miglayout-src.zip",
+                "encoding": "utf-8"
+            }
+        }
+    ],
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-1.7",
+            "path": "/usr/lib/jvm/java-7-openjdk-amd64",
+            "default": true
+        }
+    ],
+    "java.import.gradle.enabled": false,
+    "java.import.maven.enabled": false
+}

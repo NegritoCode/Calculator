@@ -107,7 +107,7 @@ public class Calculadora extends JFrame {
 				try {
 					String expresion = operacion.getExpresion();
 					if (expresion.length() > 0) {
-						operacion.set(expresion.substring(0, expresion.length() - 2));
+						operacion.set(expresion.substring(0, expresion.length() - 1));
 						render();
 					}
 				} catch (Exception e) {}
@@ -121,7 +121,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('7');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -135,7 +135,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('8');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -149,7 +149,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('9');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -163,7 +163,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('4');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -177,7 +177,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('5');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -191,7 +191,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('6');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -205,7 +205,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('1');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -219,7 +219,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('2');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -233,7 +233,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('3');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -247,7 +247,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('/');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -261,7 +261,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('*');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -275,7 +275,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('-');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -289,10 +289,8 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('+');
-					textField.setText(operacion.getExpresion());
-				} catch (Exception e) {
-					throw e;
-				}
+					render();
+				} catch (Exception e) {}
 			}
 		});
 		btnSuma.setBackground(Color.DARK_GRAY);
@@ -305,7 +303,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('0');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -319,7 +317,7 @@ public class Calculadora extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					operacion.insertarEntrada('.');
-					textField.setText(operacion.getExpresion());
+					render();
 				} catch (Exception e) {}
 			}
 		});
@@ -332,7 +330,8 @@ public class Calculadora extends JFrame {
 		btnIgual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					textField.setText("" + operacion.calcular());
+					operacion.set(operacion.calcular() + "");
+					render();
 				} catch (Exception e) {}
 			}
 		});

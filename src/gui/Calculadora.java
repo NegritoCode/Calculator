@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
+// TODO: clase muy grande, modularizar en subcomponentes
 public class Calculadora extends JFrame {
 
 	private static final long serialVersionUID = 1L;

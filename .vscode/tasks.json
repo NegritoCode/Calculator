@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar proyecto",
+            "type": "shell",
+            "command": "javac",
+            "args": [
+                "-cp",
+                "miglayout15-swing.jar",
+                "-d",
+                "bin",
+                "src/**/*"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}

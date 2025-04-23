@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Iniciadora",
+            "request": "launch",
+            "mainClass": "init.Iniciadora",
+            "classPaths": [
+                "miglayout15-swing.jar:bin",
+                "bin"
+            ]
+        }
+    ]
+}

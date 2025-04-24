@@ -1,7 +1,5 @@
 package gui;
 
-import javax.swing.*;
-
 import logica.Polinomio;
 import java.awt.Color;
 import java.awt.Font;
@@ -9,9 +7,18 @@ import java.awt.event.ActionEvent;
 import java.awt.Desktop;
 import java.awt.event.ActionListener;
 import java.net.URI;
+
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -24,14 +31,14 @@ public class Calculadora extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private Polinomio operacion;
-	private DefaultListModel<String> historialOperaciones; // Lista para almacenar el historial
+	private DefaultListModel<String> historial; // Lista para almacenar el historial
 	private JList<String> historialList;
 	private JMenuBar menuBar; // Barra de menú superior
 
 	public void render() {
 		String expresion = operacion.getExpresion();
 		System.out.println("");
-		operacion.printSelf("");
+		operacion.printSelf();
 		textField.setText(expresion.length() == 0 ? "0" : expresion);
 	}
 
@@ -39,7 +46,7 @@ public class Calculadora extends JFrame {
 		try {
 			Desktop.getDesktop().browse(new URI(url));
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			JOptionPane.showMessageDialog(this, "No se pudo abrir el enlace: " + e.getMessage(), "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
@@ -62,7 +69,7 @@ public class Calculadora extends JFrame {
 	 */
 	public Calculadora() {
 		operacion = new Polinomio("");
-		historialOperaciones = new DefaultListModel<String>(); // Inicializar el historial
+		historial = new DefaultListModel<String>(); // Inicializar el historial
 
 		setResizable(false);
 		setTitle("Calculadora");
@@ -85,7 +92,7 @@ public class Calculadora extends JFrame {
 				new ImageIcon(Calculadora.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
 		mntmLimpiarHistorial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				historialOperaciones.clear();
+				historial.clear();
 				JOptionPane.showMessageDialog(null, "Historial limpiado", "Información",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -95,7 +102,7 @@ public class Calculadora extends JFrame {
 		JSeparator separator = new JSeparator();
 		mnHistorial.add(separator);
 
-		historialList = new JList<String>(historialOperaciones);
+		historialList = new JList<String>(historial);
 		historialList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -103,6 +110,7 @@ public class Calculadora extends JFrame {
 					String seleccionado = historialList.getSelectedValue();
 					if (seleccionado != null) {
 						operacion.setExpresion(seleccionado);
+						render();
 					}
 				}
 			}
@@ -158,7 +166,7 @@ public class Calculadora extends JFrame {
 					operacion.clear();
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -177,11 +185,11 @@ public class Calculadora extends JFrame {
 				try {
 					String expresion = operacion.getExpresion();
 					if (expresion.length() > 0) {
-						operacion.set(expresion.substring(0, expresion.length() - 1));
+						operacion.setExpresion(expresion.substring(0, expresion.length() - 1));
 						render();
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -196,7 +204,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('1');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -213,7 +221,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('2');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -230,7 +238,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('3');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -247,7 +255,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('4');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -264,7 +272,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('5');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -281,7 +289,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('6');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -298,7 +306,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('7');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -315,7 +323,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('8');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -332,7 +340,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('9');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -351,7 +359,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('(');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -370,7 +378,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada(')');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -385,7 +393,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('*');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -402,7 +410,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('/');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -419,7 +427,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('-');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -436,7 +444,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('+');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -453,7 +461,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('0');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -470,7 +478,7 @@ public class Calculadora extends JFrame {
 					operacion.insertarEntrada('.');
 					render();
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});
@@ -486,13 +494,13 @@ public class Calculadora extends JFrame {
 				try {
 					String expresion = operacion.getExpresion();
 					String resultado = operacion.calcular() + "";
-					operacion.set(resultado);
+					operacion.setExpresion(resultado);
 					render();
 
 					// Agregar al historial
-					historialOperaciones.addElement(expresion);
+					historial.addElement(expresion);
 				} catch (Exception e) {
-					e.printStackTrace();
+					
 				}
 			}
 		});

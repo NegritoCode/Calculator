@@ -3,68 +3,64 @@ package logica;
 import java.util.ArrayList;
 
 /**
- * Representa un polinomio como una colección de monomios y polinomios anidados.
- * Maneja operaciones matemáticas complejas
+ * Representa un polinomio como una composición de monomios y subpolinomios.
+ * Maneja operaciones matemáticas complejas incluyendo paréntesis anidados y
+ * prioridad de operadores.
  */
 public class Polinomio extends Monomio {
 
-	/** Lista de factores que componen el polinomio */
+	/**
+	 * Lista de componentes del polinomio (monomios o subpolinomios)
+	 */
 	private ArrayList<Monomio> factores;
 	private Parentesis parentesis;
 
+	/**
+	 * Constructor base para polinomio sin paréntesis
+	 */
 	public Polinomio(String expresion) {
 		super(expresion);
 	}
 
+	/**
+	 * Constructor con control de paréntesis
+	 */
 	public Polinomio(String expresion, boolean conParentesis) {
 		super(expresion);
-
 		if (conParentesis) {
 			parentesis = Parentesis.ABIERTO;
 		}
 	}
 
+	/**
+	 * Imprime la estructura del polinomio por consola (para testeos)
+	 */
 	@Override
-	public void printSelf(String spaces) {
+	public void printSelf() {
 		System.out.print("" + getOperador() + "( ");
 		for (Monomio factor : factores) {
-			factor.printSelf(spaces + "  ");
+			factor.printSelf();
 		}
 		System.out.print(" )");
 	}
 
-	@Override
-	public Estado getEstado() {
-		Monomio termino = factores.get(factores.size() - 1);
-		Estado estado = null;
-
-		if (termino instanceof Polinomio) {
-			if (((Polinomio) termino).getParentesis().equals(Parentesis.ABIERTO)) {
-				estado = ((Polinomio) termino).getEstado();
-			} else {
-				estado = Estado.ENTERO;
-			}
-		} else {
-			estado = termino.getEstado();
-		}
-
-		return estado;
-	}
-
+	/**
+	 * reinicia el polinomio a estado inicial vacío
+	 */
 	@Override
 	public void clear() {
 		super.clear();
 		factores = new ArrayList<Monomio>();
-		factores.add(new Monomio(""));
+		factores.add(new Monomio("")); // Inicia con monomio vacío
 		parentesis = Parentesis.NO;
 	}
 
 	/**
-	 * Calcula el valor numérico del polinomio
+	 * Retorna el resultado respetando prioridad de operaciones
 	 */
 	@Override
 	public double calcular() {
-		// Primer recorrido: priorizar multiplicaciones y divisiones
+		// Fase 1: priorizar multiplicaciones y divisiones
 		ArrayList<Monomio> factoresProcesados = new ArrayList<Monomio>();
 		double acumulador = 0;
 
@@ -92,7 +88,7 @@ public class Polinomio extends Monomio {
 			}
 		}
 
-		// Segundo recorrido: procesar sumas y restas
+		// Fase 2: procesar sumas y restas
 		double resultado = acumulador;
 		for (Monomio factor : factoresProcesados) {
 			resultado += factor.calcularCompleto();
@@ -102,8 +98,11 @@ public class Polinomio extends Monomio {
 	}
 
 	/**
-	 * Procesa un nuevo caracter para construir el polinomio maneja anidamiento
-	 * automatico para multiplicaciones y divisiones
+	 * Inserta un nuevo carácter en la expresión
+	 * maneja y valida:
+	 * - anidamiento de paréntesis 
+	 * - operadores entre términos 
+	 * - construcción incremental de monomios
 	 */
 	@Override
 	public void insertarEntrada(char entrada) {
@@ -142,7 +141,7 @@ public class Polinomio extends Monomio {
 			ultimoFactor.setOperador('-');
 		}
 
-		// filtrar operaciones * y /
+		// si hay una operación, insertar otro termino
 		else if ((estadoActual.equals(Estado.ENTERO) || estadoActual.equals(Estado.DECIMAL)) && isOperacion(entrada)) {
 			// agregar nuevo monomio con el operador
 			Monomio nuevoFactor = new Monomio("");
@@ -154,9 +153,32 @@ public class Polinomio extends Monomio {
 		else {
 			ultimoFactor.insertarEntrada(entrada);
 		}
-
+		
+		// guardar entrada si todo fue satisfactorio
 		if (escribirExpresion)
 			expresion += entrada;
+	}
+	
+	//
+	// getters
+	//
+	
+	/**
+	 * Obtiene el estado actual de construcción del último componente
+	 */
+	@Override
+	public Estado getEstado() {
+		Monomio termino = factores.get(factores.size() - 1);
+
+		// si es un subpolinomio, verificar su estado de paréntesis
+		if (termino instanceof Polinomio) {
+			if (((Polinomio) termino).getParentesis().equals(Parentesis.ABIERTO)) {
+				return ((Polinomio) termino).getEstado(); // estado subpolinomio abierto
+			}
+			return Estado.ENTERO; // subpolinomio cerrado se considera completo
+		}
+
+		return termino.getEstado(); // estado del monomio simple
 	}
 
 	public Parentesis getParentesis() {
